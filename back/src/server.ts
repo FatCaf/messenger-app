@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express from 'express';
-import { userRouter } from './route/user-route';
+import { initRoutes } from './route/route';
 
 const app = express();
 
@@ -13,4 +13,4 @@ app.listen(PORT, () => {
 	console.log(`Server started on port: ${PORT}`);
 });
 
-app.use('/api/v1', userRouter);
+initRoutes(app);

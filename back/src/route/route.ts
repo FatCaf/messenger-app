@@ -1,3 +1,6 @@
+import { Express } from 'express';
 import { userRouter } from './user-route';
-
-export { userRouter };
+const initRoutes = (app: Express) => {
+	app.use('/api/v1/auth', userRouter);
+};
+export { initRoutes };
