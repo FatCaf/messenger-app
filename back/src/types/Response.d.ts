@@ -1,7 +1,7 @@
 import 'express';
 
 declare module 'express' {
-	export interface Response {
+	export interface CustomResponse {
 		data: any;
 	}
 }
