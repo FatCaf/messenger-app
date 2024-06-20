@@ -5,7 +5,7 @@ class ValidationService {
 		user: {
 			name: { pattern: /^.+$/ },
 			email: {
-				pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+				pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
 			},
 			password: {
 				pattern:
@@ -18,14 +18,14 @@ class ValidationService {
 		const validationRules = this.#modelValidationRules[modelName];
 		return Object.keys(bodyData).reduce((acc, item, index, arr) => {
 			if (!validationRules.hasOwnProperty(item)) {
-				acc[item] = 'Incorrect field!';
+				acc[item] = 'There is no such field!';
 			} else {
 				if (
 					!String(bodyData[item as keyof User])
 						.trim()
 						.match(validationRules[item].pattern)
 				) {
-					acc[item] = 'Incorrect field';
+					acc[item] = 'Incorrect field!';
 				}
 			}
 			return acc;
