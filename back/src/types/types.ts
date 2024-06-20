@@ -1,3 +1,3 @@
+import { Error, ValidationRule } from './Error';
 import { User } from './User';
-
-export { User };
+export { Error, User, ValidationRule };
