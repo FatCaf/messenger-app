@@ -1,8 +1,9 @@
 import bcryptjs from 'bcryptjs';
-import { User } from '../types/User';
+import { UserCreateDto } from '../dto/dto';
 
-export async function processUserData(data: User): Promise<User> {
-	console.log(data);
+export async function processUserData(
+	data: UserCreateDto
+): Promise<UserCreateDto> {
 	const { password } = data;
 
 	const encryptedPassword = await bcryptjs.hash(password, 7);

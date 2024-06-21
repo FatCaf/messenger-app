@@ -4,6 +4,6 @@ export type Error = {
 
 export type ValidationRule = {
 	[key: string]: {
-		[key: string]: { pattern: RegExp };
+		[key: string]: { pattern: RegExp; message: string };
 	};
 };

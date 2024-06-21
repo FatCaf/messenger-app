@@ -1,3 +1,3 @@
-import { USER } from './user';
+import { UserModelValidationSchema } from './user-model-validation-schema';
 
-export { USER };
+export { UserModelValidationSchema };

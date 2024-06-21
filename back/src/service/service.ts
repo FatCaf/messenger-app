@@ -1,4 +1,4 @@
+import errorService from './error-service';
 import { UserService } from './user-service';
 import validationService from './validation-service';
-
-export { UserService, validationService };
+export { errorService, UserService, validationService };
