@@ -3,4 +3,5 @@ export enum ErrorMessages {
 	USER_UNEXPECTED_ERROR = 'Unexpected error while creating user!',
 	USER_UNAUTHORIZED = 'Wrong login attempt, invalid login or password!',
 	JWT_UNDEFINED = 'JWT_SECRET is not defined or is empty',
+	FORBIDDEN = 'Access denied, you need to sign-in into your account!',
 }

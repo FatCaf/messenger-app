@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import userController from '../controller/controller';
 import { AppRoute } from '../enums/enums';
-import { createUserValid, responseMiddleware } from '../middleware/middleware';
+import {
+	authMiddleware,
+	createUserValid,
+	responseMiddleware,
+} from '../middleware/middleware';
 
 const userRouter = Router();
 
@@ -18,6 +22,7 @@ userRouter.post(
 );
 userRouter.get(
 	`${AppRoute.USER_GET_CONTACTS}`,
+	authMiddleware,
 	(req, res, next) => userController.getContacts(req, res, next),
 	responseMiddleware
 );
