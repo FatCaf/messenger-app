@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { StatusCode } from '../enums/enums';
 
 const responseMiddleware = (
 	req: Request,
@@ -6,17 +7,23 @@ const responseMiddleware = (
 	next: NextFunction
 ) => {
 	switch (res.statusCode) {
-		case 400:
-			res.status(400).json({ message: res.locals.message });
+		case StatusCode.BAD_REQUEST:
+			res.status(StatusCode.BAD_REQUEST).json({ message: res.locals.message });
 			break;
-		case 200:
-			// @ts-ignore
-			res.status(200).json(res.data);
+		case StatusCode.OK:
+			res.status(StatusCode.OK).json(res.locals.data);
 			break;
-		case 201:
-			res.status(201).json({ message: res.locals.message });
+		case StatusCode.CREATED:
+			res.status(StatusCode.CREATED).json({ message: res.locals.message });
 			break;
+		case StatusCode.SERVER_ERROR:
+			res.status(StatusCode.SERVER_ERROR).json({ message: res.locals.message });
+		case StatusCode.CONFLICT:
+			res.status(StatusCode.CONFLICT).json({ message: res.locals.message });
+		case StatusCode.UNAUTHORIZED:
+			res.status(StatusCode.UNAUTHORIZED).json({ message: res.locals.message });
 		default:
+			res.status(StatusCode.SERVER_ERROR).json({ message: res.locals.message });
 			break;
 	}
 
