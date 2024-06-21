@@ -1,5 +1,5 @@
 import bcryptjs from 'bcryptjs';
-import jsonwebtoken from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { UserRepositoryImplementation } from '../db/repository/user-repository';
 import {
 	UserCreateDto,
@@ -47,7 +47,7 @@ export class UserService {
 
 		if (!JWT_SECRET) throw new Error(ErrorMessages.JWT_UNDEFINED);
 
-		const token = jsonwebtoken.sign({ id: user.id }, JWT_SECRET, {
+		const token = jwt.sign({ id: user.id }, JWT_SECRET, {
 			algorithm: 'HS256',
 			expiresIn: '24h',
 		});
