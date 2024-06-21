@@ -1,24 +1,24 @@
 import { Router } from 'express';
-import userController from '../controller.ts/controller';
-import { responseMiddleware } from '../middleware/response-middleware';
-import { createUserValid } from '../middleware/user-register-middleware';
+import userController from '../controller/controller';
+import { AppRoute } from '../enums/enums';
+import { createUserValid, responseMiddleware } from '../middleware/middleware';
 
 const userRouter = Router();
 
 userRouter.post(
-	'/register',
+	`${AppRoute.USER_CREATE}`,
 	createUserValid,
 	(req, res, next) => userController.register(req, res, next),
 	responseMiddleware
 );
 userRouter.post(
-	'/login',
+	`${AppRoute.USER_LOGIN}`,
 	(req, res, next) => userController.login(req, res, next),
 	responseMiddleware
 );
 userRouter.get(
-	'/chats/:id',
-	(req, res, next) => userController.getAll(req, res, next),
+	`${AppRoute.USER_GET_CONTACTS}`,
+	(req, res, next) => userController.getContacts(req, res, next),
 	responseMiddleware
 );
 export { userRouter };

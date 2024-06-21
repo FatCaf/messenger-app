@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { USER } from '../models/models';
-import validationService from '../service/validation-service';
+import { StatusCode } from '../enums/enums';
+import { UserModelValidationSchema } from '../models/models';
+import { validationService } from '../service/service';
 
 const createUserValid = (req: Request, res: Response, next: NextFunction) => {
 	const user = { ...req.body };
-	const { ...rest } = USER;
+	const { ...rest } = UserModelValidationSchema;
 
 	const data =
 		Object.keys(user).length !== Object.keys(rest).length
@@ -14,8 +15,8 @@ const createUserValid = (req: Request, res: Response, next: NextFunction) => {
 	const errors = validationService.validate(data, 'user');
 
 	if (Object.keys(errors).length > 0) {
-		res.status(400);
-		res.locals.message = 'User entity to create isn’t valid';
+		res.status(StatusCode.BAD_REQUEST);
+		res.locals.message = errors;
 	}
 	next();
 };
