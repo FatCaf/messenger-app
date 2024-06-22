@@ -4,4 +4,8 @@ export enum AppRoute {
 	USER_LOGIN = '/login',
 	USER_CREATE = '/register',
 	USER_GET_CONTACTS = '/contacts/:id',
+	CHAT = '/chats',
+	CHAT_CREATE = '/create',
+	CHAT_GET_ALL = '/all/:id',
+	CHAT_GET_ONE = '/:id',
 }

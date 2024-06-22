@@ -19,6 +19,24 @@ class ErrorService {
 					statusCode: StatusCode.UNAUTHORIZED,
 					message: error.message,
 				};
+			case ErrorMessages.CHAT_UNEXPECTED_ERROR:
+				HttpError = {
+					statusCode: StatusCode.SERVER_ERROR,
+					message: error.message,
+				};
+				break;
+			case ErrorMessages.CHAT_NOT_FOUND:
+				HttpError = {
+					statusCode: StatusCode.NOT_FOUND,
+					message: error.message,
+				};
+				break;
+			case ErrorMessages.CHAT_CANNOT_START:
+				HttpError = {
+					statusCode: StatusCode.UNPROCESSABLE_ENTITY,
+					message: error.message,
+				};
+				break;
 			default:
 				HttpError = {
 					statusCode: StatusCode.SERVER_ERROR,

@@ -1,15 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCode } from '../enums/enums';
-import { errorService, userService } from '../service/service';
-class UserController {
-	async register(req: Request, res: Response, next: NextFunction) {
-		try {
-			if (res.statusCode !== StatusCode.BAD_REQUEST) {
-				const newUser = await userService.create(req.body);
+import { StatusCode } from '../enums/status-code';
+import { chatService, errorService } from '../service/service';
 
-				res.status(StatusCode.CREATED);
-				res.locals.data = newUser;
-			}
+class ChatController {
+	async create(req: Request, res: Response, next: NextFunction) {
+		try {
+			const chat = await chatService.create(req.body);
+
+			res.status(StatusCode.CREATED);
+			res.locals.data = chat;
 		} catch (error) {
 			if (error instanceof Error) {
 				const { statusCode, message } = errorService.createHttpError(error);
@@ -22,31 +21,13 @@ class UserController {
 		}
 	}
 
-	async login(req: Request, res: Response, next: NextFunction) {
-		try {
-			const authorizedUser = await userService.login(req.body);
-
-			res.status(StatusCode.OK);
-			res.locals.data = authorizedUser;
-		} catch (error) {
-			if (error instanceof Error) {
-				const { statusCode, message } = errorService.createHttpError(error);
-
-				res.status(statusCode);
-				res.locals.message = message;
-			}
-		} finally {
-			next();
-		}
-	}
-
-	async getContacts(req: Request, res: Response, next: NextFunction) {
+	async getAll(req: Request, res: Response, next: NextFunction) {
 		try {
 			const { id } = req.params;
+			const chats = await chatService.getAll(id);
 
-			const users = await userService.getAllUsersExceptCurrent(id);
 			res.status(StatusCode.OK);
-			res.locals.data = { users };
+			res.locals.data = chats;
 		} catch (error) {
 			if (error instanceof Error) {
 				const { statusCode, message } = errorService.createHttpError(error);
@@ -56,8 +37,28 @@ class UserController {
 			}
 		} finally {
 			next();
+		}
+	}
+
+	async getById(req: Request, res: Response, nex: NextFunction) {
+		try {
+			const { id } = req.params;
+			const { ownerId } = req.query;
+			const chat = await chatService.getById(id, ownerId as string);
+
+			res.status(StatusCode.OK);
+			res.locals.data = chat;
+		} catch (error) {
+			if (error instanceof Error) {
+				const { statusCode, message } = errorService.createHttpError(error);
+
+				res.status(statusCode);
+				res.locals.message = message;
+			}
+		} finally {
+			nex();
 		}
 	}
 }
 
-export default new UserController();
+export default new ChatController();
