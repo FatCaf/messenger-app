@@ -8,4 +8,5 @@ export enum ErrorMessages {
 	CHAT_UNEXPECTED_ERROR = "Can't start chat right now, try again later!",
 	CHAT_NOT_FOUND = "Can't find this chat!",
 	CHAT_CANNOT_START = "Can't start chat with this user, try again alter!",
+	MESSAGE_SEND_ERROR = 'Error while sending message, try again later!',
 }

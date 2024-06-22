@@ -1,9 +1,9 @@
 import { ErrorMessages, StatusCode } from '../enums/enums';
-import { HttpError } from '../types/http-error';
+import { AppError } from '../types/types';
 
 class ErrorService {
-	createHttpError(error: Error): HttpError {
-		let HttpError: HttpError = { statusCode: 0, message: '' };
+	createHttpError(error: Error): AppError {
+		let HttpError: AppError = { statusCode: 0, message: '' };
 		switch (error.message) {
 			case ErrorMessages.USER_ALREADY_EXISTS:
 				HttpError = { statusCode: StatusCode.CONFLICT, message: error.message };
@@ -46,6 +46,35 @@ class ErrorService {
 		}
 
 		return HttpError;
+	}
+
+	createWebsocketError(error: Error): AppError {
+		let WebSocketError: AppError = {
+			statusCode: 0,
+			message: '',
+		};
+
+		switch (error.message) {
+			case ErrorMessages.MESSAGE_SEND_ERROR:
+				WebSocketError = {
+					statusCode: StatusCode.WEBSOCKET_SERVER_ERROR,
+					message: error.message,
+				};
+				break;
+			case ErrorMessages.FORBIDDEN:
+				WebSocketError = {
+					statusCode: StatusCode.WEBSOCKET_UNAUTHORIZED,
+					message: error.message,
+				};
+			default:
+				WebSocketError = {
+					statusCode: StatusCode.WEBSOCKET_SERVER_ERROR,
+					message: error.message,
+				};
+				break;
+		}
+
+		return WebSocketError;
 	}
 }
 
