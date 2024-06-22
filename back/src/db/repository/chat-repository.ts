@@ -69,7 +69,21 @@ export class ChatRepositoryImplementation implements ChatRepository {
 		return new ChatDto(chat.id, createdAt, participants, messages);
 	}
 
-	async sendMessage(dto: MessageSendDto): Promise<MessageDto | null> {
-		throw new Error('Not implemented');
+	async edit(dto: MessageSendDto): Promise<MessageDto | null> {
+		const { chatId, senderId, text, attachments } = dto;
+		const timestamp = admin.firestore.Timestamp.now();
+
+		const updatedChatQuery = await this.collection.doc(chatId).update({
+			messages: admin.firestore.FieldValue.arrayUnion({
+				senderId,
+				text,
+				timestamp,
+				attachments,
+			}),
+		});
+
+		if (!updatedChatQuery.writeTime) return null;
+
+		return new MessageDto(senderId, text, timestamp.toDate(), attachments);
 	}
 }

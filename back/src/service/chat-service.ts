@@ -5,6 +5,8 @@ import {
 	ChatCreateSuccessDto,
 	ChatGetByIdDto,
 	ChatPreviewDto,
+	MessageDto,
+	MessageSendDto,
 } from '../dto/dto';
 import { ErrorMessages } from '../enums/enums';
 import { processChat } from '../helpers/process-chat';
@@ -52,5 +54,13 @@ export class ChatService {
 		if (!processedChat) throw new Error(ErrorMessages.CHAT_CANNOT_START);
 
 		return processedChat;
+	}
+
+	async edit(dto: MessageSendDto): Promise<MessageDto> {
+		const newMessage = await this.chatRepository.edit(dto);
+
+		if (!newMessage) throw new Error(ErrorMessages.MESSAGE_SEND_ERROR);
+
+		return newMessage;
 	}
 }

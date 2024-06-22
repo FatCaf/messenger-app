@@ -9,7 +9,7 @@ import { Criteria } from '../types/types';
 
 export interface ChatRepository {
 	create: (dto: ChatCreateDto) => Promise<ChatCreateSuccessDto | null>;
-	sendMessage: (dto: MessageSendDto) => Promise<MessageDto | null>;
+	edit: (dto: MessageSendDto) => Promise<MessageDto | null>;
 	getAll: () => Promise<ChatDto[]>;
 	search: <T>(
 		criteria: Criteria,
