@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCode } from '../enums/enums';
-import { UserService, errorService } from '../service/service';
+import { errorService, userService } from '../service/service';
 class UserController {
-	constructor(private readonly userService: UserService) {}
 	async register(req: Request, res: Response, next: NextFunction) {
 		try {
 			if (res.statusCode !== StatusCode.BAD_REQUEST) {
-				const newUser = await this.userService.create(req.body);
+				const newUser = await userService.create(req.body);
 
-				res.status(StatusCode.CREATED).json({ message: newUser?.message });
+				res.status(StatusCode.CREATED);
+				res.locals.data = newUser;
 			}
 		} catch (error) {
 			if (error instanceof Error) {
@@ -24,7 +24,7 @@ class UserController {
 
 	async login(req: Request, res: Response, next: NextFunction) {
 		try {
-			const authorizedUser = await this.userService.login(req.body);
+			const authorizedUser = await userService.login(req.body);
 
 			res.status(StatusCode.OK);
 			res.locals.data = authorizedUser;
@@ -44,7 +44,7 @@ class UserController {
 		try {
 			const { id } = req.params;
 
-			const users = await this.userService.getAllUsersExceptCurrent(id);
+			const users = await userService.getAllUsersExceptCurrent(id);
 			res.status(StatusCode.OK);
 			res.locals.data = { users };
 		} catch (error) {
@@ -60,4 +60,4 @@ class UserController {
 	}
 }
 
-export default UserController;
+export default new UserController();

@@ -5,14 +5,15 @@ import {
 	UserDtoWithPassword,
 } from '../../dto/dto';
 import { UserRepository } from '../../repository/user-repository';
+import { Criteria } from '../../types/search-criteria';
 import Collections from '../collections';
 import { firestore } from '../init-db';
 
 export class UserRepositoryImplementation implements UserRepository {
 	private readonly collection = firestore.collection(Collections.USERS);
 
-	async search(
-		criteria: string,
+	async getOne(
+		criteria: Criteria,
 		param: string
 	): Promise<UserDtoWithPassword | null> {
 		const userQuery = await this.collection.where(criteria, '==', param).get();
@@ -26,11 +27,9 @@ export class UserRepositoryImplementation implements UserRepository {
 
 	async create(dto: UserCreateDto): Promise<UserCreateSuccessDto | null> {
 		const res = await this.collection.add({ ...dto });
-		if (res.id) {
-			return new UserCreateSuccessDto('Created');
-		} else {
-			return null;
-		}
+		if (!res.id) return null;
+
+		return new UserCreateSuccessDto('Created');
 	}
 
 	async getAll(): Promise<UserDto[] | []> {
