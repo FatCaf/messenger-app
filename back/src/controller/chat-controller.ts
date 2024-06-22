@@ -40,7 +40,7 @@ class ChatController {
 		}
 	}
 
-	async getById(req: Request, res: Response, nex: NextFunction) {
+	async getById(req: Request, res: Response, next: NextFunction) {
 		try {
 			const { id } = req.params;
 			const { ownerId } = req.query;
@@ -56,7 +56,7 @@ class ChatController {
 				res.locals.message = message;
 			}
 		} finally {
-			nex();
+			next();
 		}
 	}
 }

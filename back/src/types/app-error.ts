@@ -1,4 +1,4 @@
-export type HttpError = {
+export type AppError = {
 	statusCode: number;
 	message: string;
 };
