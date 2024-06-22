@@ -47,6 +47,7 @@ export class ChatService {
 			id
 		);
 
+		console.log(chat);
 		if (!chat) throw new Error(ErrorMessages.CHAT_NOT_FOUND);
 
 		const processedChat = await processChat(chat, id, ownerId);

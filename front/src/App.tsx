@@ -2,7 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/protected-route';
 import { AppRoute } from './enums/app-route';
 import { Auth } from './pages/auth/auth';
-import Chats from './pages/chats/chats';
+import Chat from './pages/home/components/chat/chat';
+import Home from './pages/home/home';
 
 function App() {
   return (
@@ -11,8 +12,10 @@ function App() {
         <Route path={AppRoute.ROOT} element={<Auth />} index />
         <Route path={AppRoute.SIGN_UP} element={<Auth />} index />
         <Route path={AppRoute.SIGN_IN} element={<Auth />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path={AppRoute.CHATS} element={<Chats />} />
+        <Route element={<ProtectedRoute />} />
+        <Route path={AppRoute.CHATS} element={<Home />}>
+          <Route path={`${AppRoute.CHATS}/:id/:userId`} element={<Chat />} />
+          <Route />
         </Route>
       </Routes>
     </BrowserRouter>

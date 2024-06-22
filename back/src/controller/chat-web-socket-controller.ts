@@ -18,6 +18,7 @@ class ChatWebSocketController {
 
 		try {
 			jwt.verify(token, JWT_SECRET);
+			console.log('auth successful');
 			return true;
 		} catch (error) {
 			if (error instanceof Error) {
@@ -37,7 +38,6 @@ class ChatWebSocketController {
 	}
 
 	handleUpgrade(request: IncomingMessage, socket: Socket, head: Buffer) {
-		console.log('qwe');
 		this.wsServer.handleUpgrade(request, socket, head, (ws) => {
 			if (!this.authenticateWebSocket(ws, request)) {
 				ws.close(1008, 'Unauthorized');
