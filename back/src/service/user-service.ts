@@ -5,13 +5,13 @@ import {
 	UserCreateDto,
 	UserCreateSuccessDto,
 	UserDto,
-	UserDtoWithPassword,
 	UserLoginDto,
 	UserLoginSuccessDto,
 } from '../dto/dto';
 import { ErrorMessages } from '../enums/enums';
 import { JWT_SECRET } from '../helpers/get-envs';
 import { processUserData } from '../helpers/process-user-data';
+import { Criteria } from '../types/search-criteria';
 
 export class UserService {
 	constructor(readonly userRepository: UserRepositoryImplementation) {}
@@ -19,7 +19,7 @@ export class UserService {
 	async create(dto: UserCreateDto): Promise<UserCreateSuccessDto> {
 		const { email } = dto;
 
-		const isDuplicateUser = await this.search('email', email);
+		const isDuplicateUser = await this.userRepository.getOne('email', email);
 
 		if (isDuplicateUser) throw new Error(ErrorMessages.USER_ALREADY_EXISTS);
 
@@ -35,7 +35,7 @@ export class UserService {
 	async login(dto: UserLoginDto): Promise<UserLoginSuccessDto> {
 		const { password, email } = dto;
 
-		const user = await this.search('email', email);
+		const user = await this.userRepository.getOne('email', email);
 
 		const isEqualPasswords = await bcryptjs.compare(
 			password,
@@ -59,11 +59,12 @@ export class UserService {
 		});
 	}
 
-	async search(
-		criteria: string,
-		param: string
-	): Promise<UserDtoWithPassword | null> {
-		return await this.userRepository.search(criteria, param);
+	async getOne(criteria: Criteria, param: string): Promise<UserDto> {
+		const user = await this.userRepository.getOne(criteria, param);
+
+		if (!user) throw new Error(ErrorMessages.USER_NOT_FOUND);
+
+		return new UserDto(user.id, user.email, user.name);
 	}
 
 	async getAllUsersExceptCurrent(id: string): Promise<UserDto[]> {
