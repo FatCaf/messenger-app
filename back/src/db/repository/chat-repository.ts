@@ -66,7 +66,14 @@ export class ChatRepositoryImplementation implements ChatRepository {
 
 		const { createdAt, participants, messages } = chat.data();
 
-		return new ChatDto(chat.id, createdAt, participants, messages);
+		return new ChatDto(
+			chat.id,
+			createdAt,
+			participants,
+			undefined,
+			undefined,
+			messages
+		);
 	}
 
 	async edit(dto: MessageSendDto): Promise<MessageDto | null> {

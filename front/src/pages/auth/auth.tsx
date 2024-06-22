@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { login, register } from '../../api/requests/requests';
 import { AppRoute } from '../../enums/app-route';
@@ -14,6 +14,11 @@ import { SignUpForm } from './components/sign-up';
 const Auth: FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const authToken = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (authToken) navigate(AppRoute.CHATS);
+  }, [authToken, navigate]);
 
   const handleSignUpSubmit = async (
     payload: UserSignUpRequestDto

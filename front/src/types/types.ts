@@ -1,4 +1,10 @@
+export { type ChatType } from './chat';
+export { type ChatCreateRequestDto } from './chat-create-request-dto';
+export { type ChatCreateResponseDto } from './chat-create-response-dto';
+export { type ChatsResponseDto } from './chats-response-dto';
 export { type ContactsResponseDto } from './contacts-response-dto';
+export { type Message } from './message';
+export { type MessageResponseDto } from './message-response-dto';
 export { type User } from './user';
 export { type UserSignInRequestDto } from './user-sign-in-request-dto';
 export { type UserSignInResponseDto } from './user-sign-in-response-dto';
