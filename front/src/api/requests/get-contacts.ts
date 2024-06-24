@@ -1,5 +1,5 @@
 import { ApiRoute } from '../../enums/api-route';
-import { ContactsResponseDto } from '../../types/contacts/contacts-response-dto';
+import { ContactsResponseDto } from '../../types/types';
 import messengerApi from '../api';
 
 async function getContacts(id: string): Promise<ContactsResponseDto> {

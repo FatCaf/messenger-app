@@ -1,5 +1,12 @@
-const processLastMessage = (lastMessage: string | undefined): string =>
-  lastMessage || '';
+function truncate(str: string, n: number): string {
+  return str.length > n ? `${str.slice(0, n - 1)}...` : str;
+}
+
+const processLastMessage = (lastMessage: string | undefined): string => {
+  if (!lastMessage) return '';
+
+  return truncate(lastMessage, 20);
+};
 
 const processLastMessageTimestamp = (timestamp: Date | undefined): string => {
   if (!timestamp) return '';

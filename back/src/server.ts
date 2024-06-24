@@ -11,12 +11,12 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-// Serve static files from the "dist" directory
-app.use(express.static(path.join(__dirname, 'dist')));
+initRoutes(app);
 
-// Serve the index.html file for any other routes
+app.use(express.static(__dirname));
+
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+	res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 const server = createServer(app);
 
@@ -33,5 +33,3 @@ chatWebSocketController.setup();
 server.listen(PORT, () => {
 	console.log(`Server started on port: ${PORT}`);
 });
-
-initRoutes(app);

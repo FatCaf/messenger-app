@@ -42,7 +42,7 @@ const ChatItem: FC<ChatIteProps> = ({
     >
       <div className="flex flex-col justify-between items-start">
         <p>{interlocutor.name}</p>
-        <p>{lastMessage}</p>
+        <p className='whitespace-normal'>{lastMessage}</p>
         <p className="italic">{lastMessageTimeStamp}</p>
       </div>
       <UserAvatar name={interlocutor.name} />

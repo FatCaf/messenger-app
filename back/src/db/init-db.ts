@@ -1,9 +1,13 @@
 import admin from 'firebase-admin';
-import * as serviceAccount from '../../firebase.service.account.json';
 import { STORAGE_BUCKET } from '../helpers/get-envs';
+const firebaseServiceAccount = JSON.parse(
+	process.env.FIREBASE_SERVICE_ACCOUNT as string
+);
 
 admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+	credential: admin.credential.cert(
+		firebaseServiceAccount as admin.ServiceAccount
+	),
 	storageBucket: STORAGE_BUCKET,
 });
 
