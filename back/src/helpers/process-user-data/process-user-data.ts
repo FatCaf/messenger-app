@@ -1,5 +1,5 @@
 import bcryptjs from 'bcryptjs';
-import { UserCreateDto } from '../dto/dto';
+import { UserCreateDto } from '../../dto/dto';
 
 export async function processUserData(
 	data: UserCreateDto

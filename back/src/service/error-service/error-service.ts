@@ -1,5 +1,5 @@
-import { ErrorMessages, StatusCode } from '../enums/enums';
-import { AppError } from '../types/types';
+import { ErrorMessages, StatusCode } from '../../enums/enums';
+import { AppError } from '../../types/types';
 
 class ErrorService {
 	createHttpError(error: Error): AppError {

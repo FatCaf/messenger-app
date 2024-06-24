@@ -1,17 +1,17 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { UserRepositoryImplementation } from '../db/repository/user-repository';
+import { UserRepositoryImplementation } from '../../db/repository/user-repository';
 import {
 	UserCreateDto,
 	UserCreateSuccessDto,
 	UserDto,
 	UserLoginDto,
 	UserLoginSuccessDto,
-} from '../dto/dto';
-import { ErrorMessages } from '../enums/enums';
-import { JWT_SECRET } from '../helpers/get-envs';
-import { processUserData } from '../helpers/process-user-data';
-import { Criteria } from '../types/search-criteria';
+} from '../../dto/dto';
+import { ErrorMessages } from '../../enums/enums';
+import { JWT_SECRET } from '../../helpers/get-envs';
+import { processUserData } from '../../helpers/helpers';
+import { Criteria } from '../../types/types';
 
 export class UserService {
 	constructor(readonly userRepository: UserRepositoryImplementation) {}
@@ -64,7 +64,7 @@ export class UserService {
 
 		if (!user) throw new Error(ErrorMessages.USER_NOT_FOUND);
 
-		return new UserDto(user.id, user.email, user.name);
+		return new UserDto(user.id, user.name, user.email);
 	}
 
 	async getAllUsersExceptCurrent(id: string): Promise<UserDto[]> {

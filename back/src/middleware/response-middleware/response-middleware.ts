@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCode } from '../enums/enums';
+import { StatusCode } from '../../enums/enums';
 
 const responseMiddleware = (
 	req: Request,

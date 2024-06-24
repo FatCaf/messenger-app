@@ -1,4 +1,4 @@
-import { UserDto } from './user-dto';
+import { UserDto } from '../user/user-dto';
 
 export class ChatPreviewDto {
 	constructor(

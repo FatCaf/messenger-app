@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCode } from '../enums/status-code';
-import { chatService, errorService } from '../service/service';
+import { StatusCode } from '../../enums/enums';
+import { chatService, errorService } from '../../service/service';
 
 class ChatController {
 	async create(req: Request, res: Response, next: NextFunction) {
@@ -44,6 +44,7 @@ class ChatController {
 		try {
 			const { id } = req.params;
 			const { ownerId } = req.query;
+			console.log(id, ownerId);
 			const chat = await chatService.getById(id, ownerId as string);
 
 			res.status(StatusCode.OK);

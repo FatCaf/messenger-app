@@ -3,9 +3,8 @@ import { Buffer } from 'node:buffer';
 import { IncomingMessage } from 'node:http';
 import { Socket } from 'node:net';
 import { WebSocket, WebSocketServer } from 'ws';
-import { MessageSendDto } from '../dto/dto';
-import { JWT_SECRET } from '../helpers/get-envs';
-import { chatService, errorService } from '../service/service';
+import { JWT_SECRET } from '../../helpers/get-envs';
+import { chatService, errorService } from '../../service/service';
 class ChatWebSocketController {
 	constructor(private wsServer: WebSocketServer) {}
 
@@ -18,7 +17,7 @@ class ChatWebSocketController {
 
 		try {
 			jwt.verify(token, JWT_SECRET);
-			console.log('auth successful');
+
 			return true;
 		} catch (error) {
 			if (error instanceof Error) {
@@ -49,20 +48,40 @@ class ChatWebSocketController {
 	}
 
 	setup() {
-		this.wsServer.on('connection', (ws, request) => {
-			const pathname = request.url?.split('?');
+		this.wsServer.on('connection', (ws, request: IncomingMessage) => {
+			const url = new URL(request.url!, `http://${request.headers.host}`);
+			const pathname = url.pathname;
 
-			if (pathname && pathname[0].includes('/api/v1/chat')) {
+			if (pathname.includes('/api/v1/chat')) {
 				console.log('Chat client connected');
 
 				ws.on('message', async (message) => {
 					try {
-						const messageDto: MessageSendDto = JSON.parse(message.toString());
-						const newMessage = await chatService.edit(messageDto);
-						console.log(messageDto);
+						const messageDto = JSON.parse(message.toString());
+
+						const { action } = messageDto;
+						let data;
+						let type;
+						switch (action) {
+							case 'edit':
+								type = 'edited';
+								data = await chatService.editMessage(messageDto);
+								break;
+							case 'delete':
+								data = await chatService.deleteMessage(messageDto);
+								type = 'deleted';
+								break;
+							case 'send':
+								type = 'sended';
+								data = await chatService.sendMessage(messageDto);
+								break;
+							default:
+								break;
+						}
+
 						const updatedChatMessage = JSON.stringify({
-							type: 'chatUpdate',
-							data: newMessage,
+							type,
+							data,
 						});
 
 						this.wsServer.clients.forEach((client) => {

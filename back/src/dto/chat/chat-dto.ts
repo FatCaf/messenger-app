@@ -1,5 +1,5 @@
-import { admin } from '../db/init-db';
-import { MessageDto } from './message-dto';
+import { admin } from '../../db/init-db';
+import { MessageDto } from '../message/message-dto';
 
 export class ChatDto {
 	constructor(

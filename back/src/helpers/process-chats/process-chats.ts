@@ -1,5 +1,5 @@
-import { ChatDto, ChatPreviewDto, UserDto } from '../dto/dto';
-import { userService } from '../service/service';
+import { ChatDto, ChatPreviewDto, UserDto } from '../../dto/dto';
+import { userService } from '../../service/service';
 
 const processChats = async (
 	chats: ChatDto[],

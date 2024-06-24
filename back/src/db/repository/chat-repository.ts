@@ -3,10 +3,9 @@ import {
 	ChatCreateSuccessDto,
 	ChatDto,
 	MessageDto,
-	MessageSendDto,
 } from '../../dto/dto';
 import { ChatRepository } from '../../repository/chat-repository';
-import { Criteria } from '../../types/types';
+import { Criteria, LastMessage } from '../../types/types';
 import Collections from '../collections';
 import { admin, firestore } from '../init-db';
 
@@ -64,24 +63,32 @@ export class ChatRepositoryImplementation implements ChatRepository {
 
 		const chat = chatQuery.docs[0];
 
-		const { createdAt, participants, messages } = chat.data();
+		const {
+			createdAt,
+			participants,
+			messages,
+			lastMessage,
+			lastMessageTimeStamp,
+		} = chat.data();
 
 		return new ChatDto(
 			chat.id,
 			createdAt,
 			participants,
-			undefined,
-			undefined,
+			lastMessage,
+			lastMessageTimeStamp,
 			messages
 		);
 	}
 
-	async edit(dto: MessageSendDto): Promise<MessageDto | null> {
-		const { chatId, senderId, text, attachments } = dto;
-		const timestamp = admin.firestore.Timestamp.now();
+	async addMessage(chatId: string, dto: MessageDto): Promise<boolean> {
+		const { senderId, text, attachments, messageId, timestamp } = dto;
 
-		const updatedChatQuery = await this.collection.doc(chatId).update({
+		const isAdded = await this.collection.doc(chatId).update({
+			lastMessage: text,
+			lastMessageTimeStamp: timestamp,
 			messages: admin.firestore.FieldValue.arrayUnion({
+				messageId,
 				senderId,
 				text,
 				timestamp,
@@ -89,8 +96,47 @@ export class ChatRepositoryImplementation implements ChatRepository {
 			}),
 		});
 
+		return !!isAdded.writeTime;
+	}
+
+	async editMessage(
+		chatId: string,
+		lastMsg: LastMessage,
+		dto: MessageDto[]
+	): Promise<boolean> {
+		const { lastMessage, lastMessageTimeStamp } = lastMsg;
+		const isUpdated = await this.collection.doc(chatId).update({
+			lastMessage,
+			lastMessageTimeStamp,
+			messages: dto,
+		});
+
+		return !!isUpdated.writeTime;
+	}
+
+	async deleteMessage(
+		chatId: string,
+		messages: MessageDto[] | undefined
+	): Promise<MessageDto[] | null> {
+		if (!messages) return null;
+
+		const lastMessage =
+			messages.length > 0
+				? messages[messages.length - 1].text
+				: admin.firestore.FieldValue.delete();
+		const lastMessageTimeStamp =
+			messages.length > 0
+				? messages[messages.length - 1].timestamp
+				: admin.firestore.FieldValue.delete();
+
+		const updatedChatQuery = await this.collection.doc(chatId).update({
+			lastMessage,
+			lastMessageTimeStamp,
+			messages,
+		});
+
 		if (!updatedChatQuery.writeTime) return null;
 
-		return new MessageDto(senderId, text, timestamp.toDate(), attachments);
+		return messages;
 	}
 }

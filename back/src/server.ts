@@ -3,7 +3,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { Socket } from 'node:net';
 import { WebSocketServer } from 'ws';
-import ChatWebSocketController from './controller/chat-web-socket-controller';
+import ChatWebSocketController from './controller/websocket-controller/chat-web-socket-controller';
 import { PORT } from './helpers/get-envs';
 import { initRoutes } from './route/route';
 const app = express();
