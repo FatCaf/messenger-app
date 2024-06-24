@@ -145,7 +145,7 @@ const Chat: FC = () => {
       <div className="max-h-[80dvh] overflow-auto h-[80dvh] w-full flex flex-col gap-3 pr-1">
         {(chat?.messages || []).map((msg) => (
           <Msg
-            key={msg.timestamp}
+            key={msg.messageId}
             messageId={msg.messageId}
             text={msg.text}
             timestamp={msg.timestamp}

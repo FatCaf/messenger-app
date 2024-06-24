@@ -1,5 +1,5 @@
-import { Message } from './message';
-import { User } from './user';
+import { Message } from '../message/message';
+import { User } from '../user/user';
 
 export type ChatType = {
   id: string;
