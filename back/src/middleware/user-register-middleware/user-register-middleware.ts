@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCode } from '../enums/enums';
-import { UserModelValidationSchema } from '../models/models';
-import { validationService } from '../service/service';
+import { StatusCode } from '../../enums/enums';
+import { UserModelValidationSchema } from '../../models/models';
+import { validationService } from '../../service/service';
 
 const createUserValid = (req: Request, res: Response, next: NextFunction) => {
 	const user = { ...req.body };

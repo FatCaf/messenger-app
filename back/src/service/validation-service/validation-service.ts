@@ -1,4 +1,4 @@
-import { Error, UserValidationSchema, ValidationRule } from '../types/types';
+import { Error, UserValidationSchema, ValidationRule } from '../../types/types';
 
 class ValidationService {
 	#modelValidationRules: ValidationRule = {

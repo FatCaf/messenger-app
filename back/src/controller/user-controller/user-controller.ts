@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCode } from '../enums/enums';
-import { errorService, userService } from '../service/service';
+import { StatusCode } from '../../enums/enums';
+import { errorService, userService } from '../../service/service';
 class UserController {
 	async register(req: Request, res: Response, next: NextFunction) {
 		try {

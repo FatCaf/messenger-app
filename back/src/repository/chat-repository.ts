@@ -3,13 +3,21 @@ import {
 	ChatCreateSuccessDto,
 	ChatDto,
 	MessageDto,
-	MessageSendDto,
 } from '../dto/dto';
-import { Criteria } from '../types/types';
+import { Criteria, LastMessage } from '../types/types';
 
 export interface ChatRepository {
 	create: (dto: ChatCreateDto) => Promise<ChatCreateSuccessDto | null>;
-	edit: (dto: MessageSendDto) => Promise<MessageDto | null>;
+	addMessage: (chatId: string, dto: MessageDto) => Promise<boolean>;
+	editMessage: (
+		chatId: string,
+		lastMsg: LastMessage,
+		dto: MessageDto[]
+	) => Promise<boolean>;
+	deleteMessage: (
+		chatId: string,
+		processedMessages: MessageDto[]
+	) => Promise<MessageDto[] | null>;
 	getAll: () => Promise<ChatDto[]>;
 	search: <T>(
 		criteria: Criteria,
