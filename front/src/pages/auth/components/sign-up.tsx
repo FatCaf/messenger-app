@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-useless-escape */
+import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import { AppRoute } from '../../../enums/app-route';
@@ -8,7 +11,7 @@ type Properties = {
   onSubmit: (payload: UserSignUpRequestDto) => void;
 };
 
-const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
+const SignUpForm: FC<Properties> = ({ onSubmit }) => {
   const {
     register,
     formState: { errors },
@@ -29,7 +32,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
       <form
         name="registrationForm"
         onSubmit={handleSubmit(handleFormSubmit)}
-        className="flex flex-col justify-center items-center border p-2 gap-5 w-[730px]"
+        className="flex flex-col justify-center items-center p-2 gap-5 w-[730px]"
       >
         <h2>Register for free account</h2>
         <fieldset className="flex flex-col justify-center items-start gap-3 w-full">
@@ -130,7 +133,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
       </form>
       <div>
         <span>Already with us?</span>
-        <NavLink to={AppRoute.SIGN_IN}>Sign In</NavLink>
+        <NavLink to={AppRoute.SIGN_IN}> Sign In</NavLink>
       </div>
     </>
   );

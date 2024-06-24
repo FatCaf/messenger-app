@@ -36,16 +36,14 @@ const ChatItem: FC<ChatIteProps> = ({
     <div
       role="button"
       tabIndex={0}
-      className="flex justify-between items-center border-[2px] w-full p-2 cursor-pointer"
+      className="flex justify-between items-center w-full p-2 cursor-pointer bg-slate-800"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
       <div className="flex flex-col justify-between items-start">
         <p>{interlocutor.name}</p>
-        <p className="italic">
-          {lastMessage}
-          {`${lastMessageTimeStamp}`}
-        </p>
+        <p>{lastMessage}</p>
+        <p className="italic">{lastMessageTimeStamp}</p>
       </div>
       <UserAvatar name={interlocutor.name} />
     </div>

@@ -19,7 +19,9 @@ messengerApi.interceptors.request.use(
 
     return config;
   },
-  (error) => toast.error(error.message)
+  (error) => {
+    toast.error(error.message);
+  }
 );
 
 messengerApi.interceptors.response.use(
@@ -27,6 +29,12 @@ messengerApi.interceptors.response.use(
   (error) => {
     if (axios.isAxiosError(error)) {
       toast.error(error.response?.data.message);
+
+      if (error.response?.status === 403 || error.response?.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.pathname = `/`;
+      }
     }
   }
 );

@@ -65,7 +65,7 @@ const Auth: FC = () => {
   return (
     <div className="flex justify-center items-center">
       <section className="flex flex-col justify-center items-center h-dvh gap-7 w-full">
-        <h2>Messenger App</h2>
+        <h1 className="text-4xl">Messenger App</h1>
         {pathname !== AppRoute.SIGN_IN && pathname !== AppRoute.SIGN_UP && (
           <div className="flex flex-col justify-center items-center gap-4 w-2/6">
             <button
