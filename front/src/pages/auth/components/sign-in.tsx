@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-useless-escape */
+import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import { AppRoute } from '../../../enums/app-route';
@@ -8,7 +11,7 @@ type Properties = {
   onSubmit: (payload: UserSignInRequestDto) => void;
 };
 
-const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
+const SignInForm: FC<Properties> = ({ onSubmit }) => {
   const {
     register,
     formState: { errors },
@@ -28,10 +31,10 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
       <form
         name="loginForm"
         onSubmit={handleSubmit(handleFormSubmit)}
-        className="flex flex-col justify-center items-center border p-2 gap-5"
+        className="flex flex-col justify-center items-center p-2 gap-5 w-[730px]"
       >
         <h2>Login to your account</h2>
-        <fieldset className="flex flex-col justify-center items-start gap-3">
+        <fieldset className="flex flex-col justify-center items-start gap-3 w-full">
           <label className="flex flex-col justify-center items-start gap-1 w-full">
             Email:
             <input

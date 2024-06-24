@@ -41,7 +41,7 @@ const ContactItem: FC<ContactItemProps> = ({
     <div
       role="button"
       tabIndex={0}
-      className="flex justify-between items-center border-[2px] w-full p-2 cursor-pointer"
+      className="flex justify-between items-center w-full p-2 cursor-pointer bg-slate-800"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >

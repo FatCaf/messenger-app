@@ -1,6 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
-import { getChats } from '../../../../api/requests/get-chats';
-import { ChatsResponseDto } from '../../../../types/chats-response-dto';
+import { getChats } from '../../../../api/requests/requests';
+import { ChatsResponseDto } from '../../../../types/types';
+import {
+  processLastMessage,
+  processLastMessageTimestamp
+} from '../../../../utils/process-last-message';
 import ChatItem from './chat-item';
 
 type ChatProps = {
@@ -27,10 +31,10 @@ const Chats: FC<ChatProps> = ({ id, setChatClicked }) => {
             id={chat.id}
             userId={id}
             interlocutor={chat.interlocutor}
-            lastMessage={chat.lastMessage || ''}
-            lastMessageTimeStamp={
-              chat?.lastMessageTimeStamp?.toDateString() || ''
-            }
+            lastMessage={processLastMessage(chat.lastMessage)}
+            lastMessageTimeStamp={processLastMessageTimestamp(
+              chat.lastMessageTimeStamp
+            )}
             setChatClicked={setChatClicked}
           />
         ))}

@@ -14,7 +14,10 @@ function App() {
         <Route path={AppRoute.SIGN_IN} element={<Auth />} />
         <Route element={<ProtectedRoute />} />
         <Route path={AppRoute.CHATS} element={<Home />}>
-          <Route path={`${AppRoute.CHATS}/:id/:userId`} element={<Chat />} />
+          <Route
+            path={`${AppRoute.CHATS}/:chatId/:userId`}
+            element={<Chat />}
+          />
           <Route />
         </Route>
       </Routes>

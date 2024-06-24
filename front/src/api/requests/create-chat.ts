@@ -1,6 +1,6 @@
 import { ApiRoute } from '../../enums/api-route';
-import { ChatCreateRequestDto } from '../../types/chat-create-request-dto';
-import { ChatCreateResponseDto } from '../../types/chat-create-response-dto';
+import { ChatCreateRequestDto } from '../../types/chat/chat-create-request-dto';
+import { ChatCreateResponseDto } from '../../types/chat/chat-create-response-dto';
 import messengerApi from '../api';
 
 const createChat = async (
